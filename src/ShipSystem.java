@@ -6,7 +6,7 @@ import static java.lang.Thread.sleep;
 public class ShipSystem {
     private String alarm = "Ship is safe";
     private boolean onFire = false;
-    private Mission mission;
+
     public int movementLoop(Ship ship, Planet planet) throws InterruptedException{
         Scanner scanner = new Scanner(System.in);
         for(int i = 5; i >= 1; i--)
@@ -32,6 +32,8 @@ public class ShipSystem {
                 riskMaker(planet,ship);
             }
 
+            System.out.println("Ship: " + ship.getSpaceShipType() + ", total weight = 18TONS");
+            System.out.println("Planet: " + planet.getName() + ", risk level = " + planet.getMission_Risk());
 
             if(!oxygenCycle(ship))
             {
@@ -80,27 +82,31 @@ public class ShipSystem {
                 }
             }
 
-
             sleep(500);
 
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         }
-        if(ship.getItem() == planet.getRequiredItem() && ship.getNoBodyParts() == 0)
+        if(!ship.getItem().equals(planet.getRequiredItem()))
         {
-            System.out.println("MISSION IS A SUCCESS WE ARE SAFE ON " + planet.getName());
-            return 0;
-        }
-        else
-        {
-            System.out.println("MISSION FAILED!!!");
+            System.out.println("MISSION FAILED!!!\nwrong item :(");
             return 1;
         }
+
+        if(ship.getNoBodyParts() != 0)
+        {
+            System.out.println("MISSION FAILED!!!\ntoo many parts :(");
+            return 1;
+        }
+
+        System.out.println("MISSION IS A SUCCESS WE ARE SAFE ON " + planet.getName());
+        return 0;
+
     }
 
     private boolean oxygenCycle(Ship ship)
     {
         if(!ship.checkOxygen()) {return false;}
-        if(alarm == "OXYGEN TANK LEAKING!!!" || alarm == "DOOR SUDDENLY OPENED!!!" || alarm == "FIRE SUDDENLY STARTED!!!" )
+        if(ship.isOxygenLeak()|| ship.isOnFire())
         {
             ship.setOxygenCapacity(ship.getOxygenCapacity()- Ship.getPeopleCount()*2);
             System.out.println("OXYGEN PENALTY");
@@ -112,25 +118,25 @@ public class ShipSystem {
         return true;
     }
 
-    private void oxygenFailure(Ship ship)
-    {
-        alarm = "OXYGEN TANK LEAKING!!!";
-        ship.setOxygenLeak(true);
-    }
-
     private boolean fuelCycle(Ship ship)
     {
         if(!ship.checkFuel()) {return false;}
-        if(alarm == "FUEL TANK LEAKING!!!")
+        if(ship.isFuelLeak())
         {
-            ship.setFuelCapacity(ship.getFuelCapacity() - ship.getFuelRate()*2);
+            ship.setFuelCapacity(ship.getFuelCapacity() - Ship.getPeopleCount()*2);
             System.out.println("FUEL PENALTY");
         }
         else
         {
-            ship.setFuelCapacity(ship.getFuelCapacity() - ship.getFuelRate());
+            ship.setFuelCapacity(ship.getFuelCapacity() - Ship.getPeopleCount());
         }
         return true;
+    }
+
+    private void oxygenFailure(Ship ship)
+    {
+        alarm = "OXYGEN TANK LEAKING!!!";
+        ship.setOxygenLeak(true);
     }
 
     private void fuelFailure(Ship ship)
@@ -139,16 +145,10 @@ public class ShipSystem {
         ship.setFuelLeak(true);
     }
 
-    private void doorFailure(Ship ship)
-    {
-        alarm = "DOOR SUDDENLY OPENED!!!";
-        ship.setDoorsStatus(true);
-    }
-
     private void fireFaliure(Ship ship)
     {
         alarm = "FIRE SUDDENLY STARTED!!!";
-        onFire = true;
+        ship.setOnFire(true);
     }
 
     private void riskMaker(Planet planet, Ship ship)
@@ -165,9 +165,6 @@ public class ShipSystem {
                 fuelFailure(ship);
                 break;
             case(2):
-                doorFailure(ship);
-                break;
-            case(3):
                 fireFaliure(ship);
             default:
                 break;
