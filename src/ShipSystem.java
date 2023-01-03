@@ -1,3 +1,4 @@
+import java.util.Random;
 import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
@@ -26,6 +27,7 @@ public class ShipSystem {
 
         for(int i = 0; i < planet.getDistance(); i++)
         {
+
             if(!oxygenCycle(ship))
             {
                 System.out.println("MISSION FAILED!!!\nno oxygen :(");
@@ -87,9 +89,10 @@ public class ShipSystem {
     private boolean oxygenCycle(Ship ship)
     {
         if(!ship.checkOxygen()) {return false;}
-        if(ship.isOxygenLeak())
+        if(ship.isOxygenLeak() || ship.isDoorsStatus() || onFire)
         {
             ship.setOxygenCapacity(ship.getOxygenCapacity()- Ship.getPeopleCount()*2);
+            System.out.println("OXYGEN PENALTY");
         }
         else
         {
@@ -111,11 +114,12 @@ public class ShipSystem {
         if(!ship.checkFuel()) {return false;}
         if(ship.isFuelLeak())
         {
-            //ship.setFuelCapacity(ship.getOxygenCapacity() - mission.getFuelRate);
+            ship.setFuelCapacity(ship.getFuelCapacity() - (ship.getFuelRate()+ Ship.getTotalWeight())*2);
+            System.out.println("FUEL PENALTY");
         }
         else
         {
-            //ship.setOxygenCapacity(ship.getOxygenCapacity()- Ship.getPeopleCount());
+            ship.setFuelCapacity(ship.getFuelCapacity() - (ship.getFuelRate()+ Ship.getTotalWeight())*2);
             alarm = "Ship is safe";
         }
         return true;
@@ -133,6 +137,36 @@ public class ShipSystem {
         alarm = "DOOR SUDDENLY OPENED!!!";
         ship.setDoorsStatus(true);
         return true;
+    }
+
+    private boolean fireFaliure(Ship ship)
+    {
+        alarm = "DOOR SUDDENLY OPENED!!!";
+        onFire = true;
+        return true;
+    }
+
+    private void riskMaker(int totalRisk, Ship ship)
+    {
+        int baseRisk = 30 - totalRisk;
+        Random rand = new Random();
+        int randNum = rand.nextInt(baseRisk);
+        switch (randNum)
+        {
+            case (0):
+                oxygenFailure(ship);
+                break;
+            case(1):
+                fuelFailure(ship);
+                break;
+            case(2):
+                doorFailure(ship);
+                break;
+            case(3):
+                fireFaliure(ship);
+            default:
+                break;
+        }
     }
 
 }

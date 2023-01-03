@@ -8,9 +8,9 @@ public class Menu {
         Planet moon = new Planet();
         moon.setDistance(10);
         Ship ship = new Ship();
-        ship.setNoBodyParts(1);
+        ship.setNoBodyParts(2);
         ship.setItem("mask");
-        ship.setOxygenCapacity(8);
+        ship.setOxygenCapacity(20);
 
         // intro screen
         System.out.println("**************************  CREATORS  **************************");
