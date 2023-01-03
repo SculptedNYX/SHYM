@@ -5,16 +5,23 @@ public class Menu {
 
     int starterFunction() {
         ShipSystem system = new ShipSystem();
-        Planet moon = new Planet();
-        moon.setDistance(10);
+        Planet Mercury = new Planet(30, 50, 30, 5,"heat shield","MERCURY");
+        Planet Venus = new Planet(15, 45, 20, 5,"robot","VENUS");
+        Planet Mars = new Planet(10, 35, 20, 4,"oxygenator","MARS");
+        Planet Jupiter = new Planet(40, 55, 50, 4,"gas mask","JUPITER");
+        Planet Saturn = new Planet(50, 65, 50, 3,"light prism","SATURN");
+        Planet Uranus = new Planet(60, 75, 65, 3,"sampler","URANUS");
+        Planet Neptune = new Planet(70, 90, 70, 3,"cultivator","NEPTUNE");
         Ship ship = new Ship();
         ship.setNoBodyParts(2);
-        ship.setItem("mask");
+        ship.setItem("oxygenator");
         ship.setOxygenCapacity(20);
+        ship.setFuelCapacity(20);
+        ship.setFuelRate(1);
 
         // intro screen
         System.out.println("**************************  CREATORS  **************************");
-        System.out.println("Yehya Al-Ashmawy / Mohamed Aymn / Hamza Mohamed / Sahdi Mostafa");
+        System.out.println("Yehya Al-Ashmawy / Mohamed Aymn / Hamza Mohamed / Shadi Mostafa");
         System.out.println("***************************************************************");
         System.out.println("                                           all rights reserved©");
 
@@ -44,6 +51,7 @@ public class Menu {
                     return 0;
                 case(1):
                     dataLoop: while(true){
+                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
                         // options
                         System.out.println("1: import pilot data [data: " + "Name/ " + pilotName + " Age/ " + pilotAge + " Weight/ " + pilotWeight + " Experience/ " + pilotExp + " Score/ " + pilotScore + " ]");
                         System.out.println("2: import worker data [data: " + "Name/ " + workerAge + " Age/ " + workerAge + " weight/ " + workerWeight + " ]");
@@ -133,7 +141,7 @@ public class Menu {
 
             // (main game loop) movement loop
             try {
-                system.movementLoop(ship, moon);
+                system.movementLoop(ship, Mars);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
