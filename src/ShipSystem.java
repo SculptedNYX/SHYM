@@ -9,7 +9,7 @@ public class ShipSystem {
     private Mission mission;
     public int movementLoop(Ship ship, Planet planet) throws InterruptedException{
         Scanner scanner = new Scanner(System.in);
-        for(int i = 1; i <=5; i++)
+        for(int i = 5; i >= 1; i--)
         {
             System.out.println(i);
             sleep(1000);
@@ -27,10 +27,21 @@ public class ShipSystem {
 
         for(int i = 0; i < planet.getDistance(); i++)
         {
+            if(alarm == "Ship is safe")
+            {
+                riskMaker(planet,ship);
+            }
+
 
             if(!oxygenCycle(ship))
             {
                 System.out.println("MISSION FAILED!!!\nno oxygen :(");
+                return 1;
+            }
+
+            if(!fuelCycle(ship))
+            {
+                System.out.println("MISSION FAILED!!!\nno fuel :(");
                 return 1;
             }
 
@@ -74,7 +85,7 @@ public class ShipSystem {
 
             System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
         }
-        if(ship.getItem() == planet.getItem() && ship.getNoBodyParts() == 0)
+        if(ship.getItem() == planet.getRequiredItem() && ship.getNoBodyParts() == 0)
         {
             System.out.println("MISSION IS A SUCCESS WE ARE SAFE ON " + planet.getName());
             return 0;
@@ -89,7 +100,7 @@ public class ShipSystem {
     private boolean oxygenCycle(Ship ship)
     {
         if(!ship.checkOxygen()) {return false;}
-        if(ship.isOxygenLeak() || ship.isDoorsStatus() || onFire)
+        if(alarm == "OXYGEN TANK LEAKING!!!" || alarm == "DOOR SUDDENLY OPENED!!!" || alarm == "FIRE SUDDENLY STARTED!!!" )
         {
             ship.setOxygenCapacity(ship.getOxygenCapacity()- Ship.getPeopleCount()*2);
             System.out.println("OXYGEN PENALTY");
@@ -97,58 +108,52 @@ public class ShipSystem {
         else
         {
             ship.setOxygenCapacity(ship.getOxygenCapacity()- Ship.getPeopleCount());
-            alarm = "Ship is safe";
         }
         return true;
     }
 
-    private boolean oxygenFailure(Ship ship)
+    private void oxygenFailure(Ship ship)
     {
         alarm = "OXYGEN TANK LEAKING!!!";
         ship.setOxygenLeak(true);
-        return true;
     }
 
     private boolean fuelCycle(Ship ship)
     {
         if(!ship.checkFuel()) {return false;}
-        if(ship.isFuelLeak())
+        if(alarm == "FUEL TANK LEAKING!!!")
         {
-            ship.setFuelCapacity(ship.getFuelCapacity() - (ship.getFuelRate()+ Ship.getTotalWeight())*2);
+            ship.setFuelCapacity(ship.getFuelCapacity() - ship.getFuelRate()*2);
             System.out.println("FUEL PENALTY");
         }
         else
         {
-            ship.setFuelCapacity(ship.getFuelCapacity() - (ship.getFuelRate()+ Ship.getTotalWeight())*2);
-            alarm = "Ship is safe";
+            ship.setFuelCapacity(ship.getFuelCapacity() - ship.getFuelRate());
         }
         return true;
     }
 
-    private boolean fuelFailure(Ship ship)
+    private void fuelFailure(Ship ship)
     {
-        alarm = "OXYGEN TANK LEAKING!!!";
+        alarm = "FUEL TANK LEAKING!!!";
         ship.setFuelLeak(true);
-        return true;
     }
 
-    private boolean doorFailure(Ship ship)
+    private void doorFailure(Ship ship)
     {
         alarm = "DOOR SUDDENLY OPENED!!!";
         ship.setDoorsStatus(true);
-        return true;
     }
 
-    private boolean fireFaliure(Ship ship)
+    private void fireFaliure(Ship ship)
     {
-        alarm = "DOOR SUDDENLY OPENED!!!";
+        alarm = "FIRE SUDDENLY STARTED!!!";
         onFire = true;
-        return true;
     }
 
-    private void riskMaker(int totalRisk, Ship ship)
+    private void riskMaker(Planet planet, Ship ship)
     {
-        int baseRisk = 30 - totalRisk;
+        int baseRisk = (int) (100 - planet.getMission_Risk());
         Random rand = new Random();
         int randNum = rand.nextInt(baseRisk);
         switch (randNum)
