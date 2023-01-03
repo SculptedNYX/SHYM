@@ -44,9 +44,4 @@ public class Pilot extends People
         System.out.println("Body Number : " + A1.getNoBodyParts() + ", part is ejected successfully");
     }
 
-    public void closeDoors(Ship ship)
-    {
-        ship.setDoorsStatus(true);
-    }
-
 }
