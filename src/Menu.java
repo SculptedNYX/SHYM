@@ -3,6 +3,33 @@ import java.util.Scanner;
 public class Menu {
     Scanner s = new Scanner(System.in);
 
+    // -------------- initial data values
+    // pilot
+    String pilotName = "";
+    int pilotAge = 0;
+    double pilotWeight = 0;
+    String pilotExp = "";
+    int pilotScore = 0;
+    // worker
+    String WorkerName = "";
+    int workerAge = 0;
+    double workerWeight = 0;
+    // passengers number
+    int passengersNumber = 0;
+    // planet
+    String planet;
+
+    // ship
+    int oxygen;
+    int fuel;
+    String item;
+    int bodyPartsNumber;
+    String industryDate;
+    String shipType;
+    Pilot p = new Pilot(pilotName, pilotAge,pilotWeight,pilotExp,pilotScore);
+    Worker w = new Worker(WorkerName, workerAge,workerWeight);
+//    ship s = new Ship()
+
     int starterFunction() {
         ShipSystem system = new ShipSystem();
         Planet Mercury = new Planet(30, 50, 30, 5,"heat shield","MERCURY");
@@ -26,117 +53,164 @@ public class Menu {
         System.out.println("                                           all rights reserved©");
 
 
-        // -------------- initial data values
-        // pilot
-        String pilotName = "";
-        int pilotAge = 0;
-        double pilotWeight = 0;
-        String pilotExp = "";
-        int pilotScore = 0;
-        // worker
-        String WorkerName = "";
-        int workerAge = 0;
-        double workerWeight = 0;
-        // passengers number
-        int passengersNumber = 0;
-
-
-        // main loop
         while (true){
             System.out.println("0: Exit Game");
             System.out.println("1: Setup mission");
             int mainChoice = s.nextInt();
             switch (mainChoice){
                 case(0):
-                    return 0;
+                    return(0);
                 case(1):
-                    dataLoop: while(true){
-                        System.out.println("\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n");
-                        // options
-                        System.out.println("1: import pilot data [data: " + "Name/ " + pilotName + " Age/ " + pilotAge + " Weight/ " + pilotWeight + " Experience/ " + pilotExp + " Score/ " + pilotScore + " ]");
-                        System.out.println("2: import worker data [data: " + "Name/ " + workerAge + " Age/ " + workerAge + " weight/ " + workerWeight + " ]");
-                        System.out.println("3: import passenger data [data: " + "Number/ " + passengersNumber + " ]");
-                        System.out.println("0: back");
-                        int dataFillChoice = s.nextInt();
-                        switch (dataFillChoice){
-                            case(0):
-                                break dataLoop;
-                            case(1):
-                                System.out.print("import pilot name: ");
-                                s.nextLine();
-                                while(true){
-                                    pilotName = s.nextLine();
-                                    if (pilotName != "" ) break;
-                                    System.out.print("      enter a valid input: ");
-                                }
-                                //
-                                System.out.print("import pilot age (by numbers):");
-                                while(true){
-                                    pilotAge = s.nextInt();
-                                    if (pilotAge != 0 ) break;
-                                    System.out.print("      enter a valid input: ");
-                                }
-                                //
-                                System.out.print("import pilot weight (by numbers): ");
-                                pilotWeight = s.nextDouble();
-                                //
-                                System.out.print("import pilot experience (text) ");
-                                s.nextLine();
-                                while(true){
-                                    pilotExp = s.nextLine();
-                                    if (pilotExp != "0" ) break;
-                                    System.out.print("      enter a valid input: ");
-                                }
-                                //
-                                System.out.print("import pilot flight score (numbers) ");
-                                while(true){
-                                    pilotScore = s.nextInt();
-                                    if (pilotScore != 0 ) break;
-                                    System.out.print("      enter a valid input: ");
-                                }
-                                Pilot p = new Pilot(pilotName, pilotAge,pilotWeight,pilotExp,pilotScore);
-                                ship.setPilot(p);
-                                break;
-                            case(2):
-                                System.out.println("import worker name:");
-                                s.nextLine();
-                                while(true){
-                                    WorkerName = s.nextLine();
-                                    if (WorkerName != "" ) break;
-                                    System.out.print("      enter a valid input: ");
-                                }
-                                System.out.println("import worker age (by numbers):");
-                                while(true){
-                                    workerAge = s.nextInt();
-                                    if (workerAge != 0 ) break;
-                                    System.out.print("      enter a valid input: ");
-                                }
+                    System.out.println("people, destination and ship data are required !!!");
+                    System.out.println("1: people data");
+                    System.out.println("2: destination data");
+                    System.out.println("3: ship data");
+                    System.out.println("0: back");
+                    int dataChoice = s.nextInt();
+                    switch (dataChoice){
+                        case(1):
+                            innerLoop:while(true){
+                                // options
+                                System.out.println("1: import pilot data [data: " + "Name/ " + pilotName + ", Age/ " + pilotAge + ", Weight/ " + pilotWeight + ", Experience/ " + pilotExp + ", Score/ " + pilotScore + "]");
+                                System.out.println("2: import worker data [data: " + "Name/ " + workerAge + ", Age/ " + workerAge + ", weight/ " + workerWeight + "]");
+                                System.out.println("3: import passenger data [data: " + "Number/ " + passengersNumber + "]");
+                                System.out.println("0: back");
+                                int dataFillChoice = s.nextInt();
+                                switch (dataFillChoice){
+                                    case(0):
+                                        break innerLoop;
+                                    case(1):
+                                        System.out.print("import pilot name: ");
+                                        s.nextLine();
+                                        while(true){
+                                            pilotName = s.nextLine();
+                                            if (pilotName != "" ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        //
+                                        System.out.print("import pilot age (by numbers):");
+                                        while(true){
+                                            pilotAge = s.nextInt();
+                                            if (pilotAge != 0 ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        //
+                                        System.out.print("import pilot weight (by numbers): ");
+                                        pilotWeight = s.nextDouble();
+                                        //
+                                        System.out.print("import pilot experience (text) ");
+                                        s.nextLine();
+                                        while(true){
+                                            pilotExp = s.nextLine();
+                                            if (pilotExp != "0" ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        //
+                                        System.out.print("import pilot flight score (numbers) ");
+                                        while(true){
+                                            pilotScore = s.nextInt();
+                                            if (pilotScore != 0 ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        ship.setPilot(p);
+                                        break;
+                                    case(2):
+                                        System.out.print("import worker name:");
+                                        s.nextLine();
+                                        while(true){
+                                            WorkerName = s.nextLine();
+                                            if (WorkerName != "" ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        System.out.print("import worker age (by numbers):");
+                                        while(true){
+                                            workerAge = s.nextInt();
+                                            if (workerAge != 0 ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
 
-                                System.out.println("import worker weight (by numbers):");
-                                while(true){
-                                    workerWeight = s.nextDouble();
-                                    if (workerWeight != 0 ) break;
-                                    System.out.print("      enter a valid input: ");
+                                        System.out.print("import worker weight (by numbers):");
+                                        while(true){
+                                            workerWeight = s.nextDouble();
+                                            if (workerWeight != 0 ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        break;
+                                    case(3):
+                                        System.out.print("import number of passengers");
+                                        while(true){
+                                            passengersNumber = s.nextInt();
+                                            if (passengersNumber != 0 ) break;
+                                            System.out.print("      enter a valid input: ");
+                                        }
+                                        ship.setPeopleCount(ship.getPeopleCount()+passengersNumber);
+                                        break;
+                                    default:
+                                        System.out.println("make sure that you have chosen 0 or 1");
                                 }
-                                Worker W = new Worker(WorkerName, workerAge,workerWeight);
                                 break;
-                            case(3):
-                                System.out.println("import number of passengers");
-                                while(true){
-                                    passengersNumber = s.nextInt();
-                                    if (passengersNumber != 0 ) break;
-                                    System.out.print("      enter a valid input: ");
+                            }
+//                        destination data
+                        case(2):
+                            planetLoop:while (true){
+                                System.out.println("choose your destination");
+                                System.out.println("1: Mars");
+                                System.out.println("2: Jupiter");
+                                System.out.println("3: Saturn");
+                                System.out.println("4: Uranus");
+                                System.out.println("5: Neptune");
+                                System.out.println("0: back");
+                                int destinationChoice = s.nextInt();
+                                switch (destinationChoice){
+                                    case(0):
+                                        break planetLoop;
+                                    case(1):
+                                        planet = Mars;
+                                        break;
+                                    case(2):
+                                        planet = Jupiter;
+                                        break;
+                                    case(3):
+                                        planet = Saturn;
+                                        break;
+                                    case(4):
+                                        planet = Uranus;
+                                        break;
+                                    case(5):
+                                        planet = Neptune;
+                                        break;
                                 }
-                                ship.setPeopleCount(ship.getPeopleCount()+passengersNumber);
-                                break;
-                            default:
-                                System.out.println("make sure that you have chosen 0 or 1");
-                        }
+                            }
+//                            ship data
+                        case(3):
+                            System.out.println("Enter amount of oxygen");
+                            oxygen = s.nextInt();
+
+                            System.out.println("Enter amount of fuel");
+                            fuel = s.nextInt();
+
+                            System.out.println("Enter item");
+                            s.nextLine();
+                            item = s.nextLine();
+
+                            System.out.println("4: number of body parts");
+                            bodyPartsNumber = s.nextInt();
+
+                            System.out.println("Enter industry date");
+                            s.nextLine();
+                            industryDate = s.nextLine();
+
+                            System.out.println("Enter ship type");
+                            s.nextLine();
+                            shipType = s.nextLine();
+
+                            break;
+                        case(0):
+                            break;
                     }
                     break;
-
                 default:
-                    System.out.println("make sure that you have chosen 0 or 1");
+                    System.out.println("Please choose 1 or 0");
             }
 
             // (main game loop) movement loop
@@ -151,16 +225,47 @@ public class Menu {
     }
 
     int controllers() {
-//        first switch pilot or worker
-//        worker functions (repear fuel, repear ox)
-//        pilot functions (releaseBodyPart)
-
-
-
-        System.out.print("1: repear fuel");
-//        switch()
-        double pilotWeight = s.nextDouble();
-        return 0;
+        while (true){
+            int choice;
+            System.out.println("choose who will perform the action");
+            System.out.println("1: pilot");
+            System.out.println("2: worker");
+            choice = s.nextInt();
+            switch (choice){
+                case 1:
+                    System.out.println("choose an action");
+                    System.out.println("1: releaseBodyPart");
+                    System.out.println("0: back");
+                    int pilotChoice = s.nextInt();
+                    switch (pilotChoice){
+                        case 0:
+                            break;
+                        case 1:
+                            p.releaseBodyPart(ship);
+                            return 0;
+                    }
+                    break;
+                case 2:
+                    System.out.println("choose an action");
+                    System.out.println("1: reaper fuel");
+                    System.out.println("2: reaper ox");
+                    System.out.println("0: back");
+                    int workerChoice = s.nextInt();
+                    switch (workerChoice){
+                        case 0:
+                            break;
+                        case 1:
+                            w.repairFuel(ship);
+                            return 0;
+                        case 2:
+                            w.repairOxygen(ship);
+                            return 0;
+                    }
+                    break;
+                default:
+                    System.out.println("make sure that you have chosen 1 or 2");
+            }
+        }
     }
 
 }
