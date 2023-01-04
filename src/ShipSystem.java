@@ -1,14 +1,11 @@
 import java.util.Random;
-import java.util.Scanner;
 
 import static java.lang.Thread.sleep;
 
 public class ShipSystem {
     private String alarm = "Ship is safe";
-    private boolean onFire = false;
 
-    public int movementLoop(Ship ship, Planet planet) throws InterruptedException{
-        Scanner scanner = new Scanner(System.in);
+    public void movementLoop(Ship ship, Planet planet) throws InterruptedException{
         for(int i = 5; i >= 1; i--)
         {
             System.out.println(i);
@@ -27,9 +24,26 @@ public class ShipSystem {
 
         for(int i = 0; i < planet.getDistance(); i++)
         {
-            if(alarm == "Ship is safe")
+            if(alarm.equals("Ship is safe"))
             {
                 riskMaker(planet,ship);
+            }
+
+            if(ship.isOnFire())
+            {
+                alarm = "FIRE BROKE OUT";
+            }
+            else if (ship.isFuelLeak())
+            {
+                alarm = "FUEL IS LEAKING";
+            }
+            else if(ship.isOxygenLeak())
+            {
+                alarm = "OXYGEN IS LEAKING";
+            }
+            else
+            {
+                alarm = "Ship is safe";
             }
 
             System.out.println("Ship: " + ship.getSpaceShipType() + ", total weight = 18TONS");
@@ -38,13 +52,13 @@ public class ShipSystem {
             if(!oxygenCycle(ship))
             {
                 System.out.println("MISSION FAILED!!!\nno oxygen :(");
-                return 1;
+                return;
             }
 
             if(!fuelCycle(ship))
             {
                 System.out.println("MISSION FAILED!!!\nno fuel :(");
-                return 1;
+                return;
             }
 
             for (int j = 0; j < i; j++)
@@ -67,18 +81,12 @@ public class ShipSystem {
             if(i % 5 == 0)
             {
                 if(ship.getNoBodyParts() - 1 >= 0) {
-                    System.out.println("Please eject part of the ship");
-                    // Call menu
-
-                    // Temp code
-                    if (scanner.nextInt() == 1) {
-                        ship.getPilot().releaseBodyPart(ship);
-                    }
+                    Menu.controllers(ship);
                 }
                 else
                 {
                     System.out.println("MISSION FAILED!!!\nmissing parts :(");
-                    return 1;
+                    return;
                 }
             }
 
@@ -89,17 +97,17 @@ public class ShipSystem {
         if(!ship.getItem().equals(planet.getRequiredItem()))
         {
             System.out.println("MISSION FAILED!!!\nwrong item :(");
-            return 1;
+            return;
         }
 
         if(ship.getNoBodyParts() != 0)
         {
             System.out.println("MISSION FAILED!!!\ntoo many parts :(");
-            return 1;
+            return;
         }
 
         System.out.println("MISSION IS A SUCCESS WE ARE SAFE ON " + planet.getName());
-        return 0;
+        System.out.println("***************************************************************");
 
     }
 
@@ -133,39 +141,21 @@ public class ShipSystem {
         return true;
     }
 
-    private void oxygenFailure(Ship ship)
-    {
-        alarm = "OXYGEN TANK LEAKING!!!";
-        ship.setOxygenLeak(true);
-    }
-
-    private void fuelFailure(Ship ship)
-    {
-        alarm = "FUEL TANK LEAKING!!!";
-        ship.setFuelLeak(true);
-    }
-
-    private void fireFaliure(Ship ship)
-    {
-        alarm = "FIRE SUDDENLY STARTED!!!";
-        ship.setOnFire(true);
-    }
-
     private void riskMaker(Planet planet, Ship ship)
     {
-        int baseRisk = (int) (100 - planet.getMission_Risk());
+        int baseRisk = (int) (80 - planet.getMission_Risk());
         Random rand = new Random();
         int randNum = rand.nextInt(baseRisk);
         switch (randNum)
         {
             case (0):
-                oxygenFailure(ship);
+                ship.setOxygenLeak(true);
                 break;
             case(1):
-                fuelFailure(ship);
+                ship.setFuelLeak(true);
                 break;
             case(2):
-                fireFaliure(ship);
+                ship.setOnFire(true);
             default:
                 break;
         }

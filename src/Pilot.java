@@ -10,38 +10,21 @@ public class Pilot extends People
         this.flightScore = flightScore;
     }
 
-    public String getExperience() {
-        return Experience;
+    @Override
+    public void speak() {
+        System.out.println("I AM A PILOT!");
     }
 
-    public void setExperience(String experience) {
-        Experience = experience;
-    }
-
-    public int getFlightScore() {
-        return flightScore;
-    }
-
-    public void setFlightScore(int flightScore) {
-        this.flightScore = flightScore;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public String destination()
-    {
-        return destination;
-    }
     public void releaseBodyPart(Ship A1)
     {
         A1.setNoBodyParts(A1.getNoBodyParts() - 1);
         System.out.println("Body Number : " + A1.getNoBodyParts() + ", part is ejected successfully");
+    }
+
+    public void waterSystem(Ship A1)
+    {
+        A1.setOnFire(false);
+        System.out.println("water system on");
     }
 
 }

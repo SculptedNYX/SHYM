@@ -4,7 +4,11 @@ public class Worker extends  People
     public Worker(String name, int age, double weight)
     {
         super(name ,age ,weight);
-        this.Salary = Salary;
+    }
+
+    @Override
+    public void speak() {
+        System.out.println("I AM A WORKER!");
     }
 
     public double getSalary()

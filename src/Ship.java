@@ -9,10 +9,6 @@ public class Ship
     private Pilot pilot;
     private Worker worker;
 
-    public int getIndustryDate() {
-        return industryDate;
-    }
-
     public boolean isOnFire() {
         return onFire;
     }
