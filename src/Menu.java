@@ -55,7 +55,7 @@ public class Menu {
         System.out.println("                                           all rights reserved©");
 
         while (true){
-            System.out.println("0: Exit Game");
+            System.out.println("0: Exit Menu");
             System.out.println("1: Setup mission");
             System.out.println("***************************************************************");
             int mainChoice = s.nextInt();
@@ -219,7 +219,7 @@ public class Menu {
                                 boolean shipCont = true;
                                 while(shipCont)
                                 {
-                                    System.out.println("Ship type: " + shipType + ", Industry date "+ industryDate + ", Oxygen amount " + oxygen + ", Fuel amount " + fuel + ", Item" + item + ", Body parts " + bodyPartsNumber);
+                                    System.out.println("Ship type: " + shipType + ", Industry date "+ industryDate + ", Oxygen amount " + oxygen + ", Fuel amount " + fuel + ", Item " + item + ", Body parts " + bodyPartsNumber);
                                     System.out.println("1: Edit");
                                     System.out.println("0: back");
                                     System.out.println("***************************************************************");
@@ -327,9 +327,6 @@ public class Menu {
                 case 0:
                     return;
                 case 1:
-                    boolean pilotAction = true;
-                    while (pilotAction)
-                    {
                         System.out.println("choose an action");
                         System.out.println("1: releaseBodyPart");
                         System.out.println("2: waterSystem");
@@ -338,7 +335,7 @@ public class Menu {
                         int pilotChoice = s.nextInt();
                         switch (pilotChoice){
                             case 0:
-                                pilotAction = false;
+
                                 break;
                             case 1:
                                 p.releaseBodyPart(ship);
@@ -350,12 +347,9 @@ public class Menu {
                                 p.speak();
                                 break;
                         }
-                    }
+
                     break;
                 case 2:
-                    boolean workerAction = true;
-                    while(workerAction)
-                    {
                         System.out.println("choose an action");
                         System.out.println("1: repair fuel");
                         System.out.println("2: repair oxygen");
@@ -364,7 +358,7 @@ public class Menu {
                         int workerChoice = s.nextInt();
                         switch (workerChoice){
                             case 0:
-                                workerAction = false;
+
                                 break;
                             case 1:
                                 w.repairFuel(ship);
@@ -376,7 +370,7 @@ public class Menu {
                                 w.speak();
                                 break;
                         }
-                    }
+
                     break;
                 default:
                     System.out.println("make sure that you have chosen 1 or 2");

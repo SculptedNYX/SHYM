@@ -2,7 +2,7 @@ public class Pilot extends People
 {
     private String Experience;
     private int flightScore;
-    private String destination;
+
     public Pilot(String name, int age, double weight, String Experience, int flightScore)
     {
         super(name,age,weight);
