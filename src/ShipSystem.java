@@ -75,7 +75,7 @@ public class ShipSystem {
             {
                 System.out.print("...");
             }
-            System.out.println("0");
+            System.out.println("O");
             System.out.println("\n"+alarm);
 
             if(i % 5 == 0)
