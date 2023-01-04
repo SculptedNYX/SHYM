@@ -1,2 +1,2 @@
 # SHYM
-consle space program
+console space program
