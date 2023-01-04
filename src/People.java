@@ -1,4 +1,4 @@
-public class People
+public abstract class People
 {
     private String name;
     private int age;
@@ -11,5 +11,7 @@ public class People
         Ship.setPeopleCount(Ship.getPeopleCount()+1);
         Ship.setTotalWeight(Ship.getTotalWeight()+weight);
     }
+
+    public abstract void speak();
 }
 
